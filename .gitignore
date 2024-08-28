@@ -1,0 +1,17 @@
+# Python cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment
+.venv/
+venv/
+
+# IDE settings
+.vscode/
+.idea/
+
+# Other common files to ignore
+*.log
+*.env
