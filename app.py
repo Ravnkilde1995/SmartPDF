@@ -1,11 +1,16 @@
 from flask import Flask
-from app.frontend.templates import frontend_bp
+from app.frontend.routes import frontend_bp
+from app.backend.pdf import pdf_bp
+from app.backend.upload import upload_bp
 
 def create_app():
     app = Flask(__name__)
 
-    # Register Blueprints
+    app.config['OUTPUT_FOLDER'] = 'app/persistence/delivery_notes'
+
     app.register_blueprint(frontend_bp, url_prefix='/')
+    app.register_blueprint(pdf_bp, url_prefix='/pdf')
+    app.register_blueprint(upload_bp, url_prefix='/upload')
 
     return app
 

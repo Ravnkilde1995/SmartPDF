@@ -6,23 +6,23 @@ window.onload = function () {
     const showUploadBtn = document.getElementById('show-upload');
 
     function showView(view) {
-        try {
+        // try {
             if (view === 'editor') {
                 editorView.style.display = 'block';
                 uploadView.style.display = 'none';
             } else if (view === 'upload') {
                 editorView.style.display = 'none';
                 uploadView.style.display = 'block';
-            } else {
-                throw new Error('Invalid view parameter: ' + view)
+            // } else {
+            //     throw new Error('Invalid view parameter: ' + view)
             }
-        } catch (error) {
-            console.error(error.message);
-            alert('Something went wrong. The default view will be reloaded.')
-            editorView.style.display = 'block';
-            uploadView.style.display = 'none';
-            history.replaceState(null, null, '?view=editor');
-        }
+    //     } catch (error) {
+    //         console.error(error.message);
+    //         alert('Something went wrong. The default view will be reloaded.')
+    //         editorView.style.display = 'block';
+    //         uploadView.style.display = 'none';
+    //         history.replaceState(null, null, '?view=editor');
+    //     }
     }
 
 
