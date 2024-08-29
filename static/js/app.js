@@ -6,25 +6,20 @@ window.onload = function () {
     const showUploadBtn = document.getElementById('show-upload');
 
     function showView(view) {
-        // try {
-            if (view === 'editor') {
-                editorView.style.display = 'block';
-                uploadView.style.display = 'none';
-            } else if (view === 'upload') {
-                editorView.style.display = 'none';
-                uploadView.style.display = 'block';
-            // } else {
-            //     throw new Error('Invalid view parameter: ' + view)
-            }
-    //     } catch (error) {
-    //         console.error(error.message);
-    //         alert('Something went wrong. The default view will be reloaded.')
-    //         editorView.style.display = 'block';
-    //         uploadView.style.display = 'none';
-    //         history.replaceState(null, null, '?view=editor');
-    //     }
+        if (view === 'editor') {
+            editorView.style.display = 'block';
+            uploadView.style.display = 'none';
+        } else if (view === 'upload') {
+            editorView.style.display = 'none';
+            uploadView.style.display = 'block';
+        } else {
+            console.error('Invalid view parameter: ' + view);
+            alert('Something went wrong. The default view will be reloaded.');
+            editorView.style.display = 'block';
+            uploadView.style.display = 'none';
+            history.replaceState(null, null, '?view=editor');
+        }
     }
-
 
     // Initialize view based on current URL or default
     const urlParams = new URLSearchParams(window.location.search);
