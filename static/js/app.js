@@ -1,5 +1,4 @@
 window.onload = function () {
-    const view = document.querySelector('meta[name="current-view"]').getAttribute('content');
     const editorView = document.getElementById('editor-view');
     const uploadView = document.getElementById('upload-view');
     const showEditorBtn = document.getElementById('show-editor');
