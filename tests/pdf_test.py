@@ -1,6 +1,4 @@
-import os
-
-def test_generate_pdf(client, tmpdir):
+def test_generate_pdf(client, tmp_path):
     form_data = {
         'recipient_name': 'John Doe',
         'req_number': 'REQ123456',
@@ -10,14 +8,14 @@ def test_generate_pdf(client, tmpdir):
         'item1_qty': '1'
     }
 
-    client.application.config['OUTPUT_FOLDER'] = str(tmpdir)
+    client.application.config['OUTPUT_FOLDER'] = str(tmp_path)
 
     response = client.post('/pdf/generate_pdf', data=form_data)
 
     assert response.status_code == 200
     assert response.headers['Content-Type'] == 'application/pdf'
 
-    output_file = os.path.join(str(tmpdir), 'generated.pdf')
+    output_file = tmp_path / 'generated.pdf'
     
-    assert os.path.exists(output_file)
+    assert output_file.exists()
     print(f"File '{output_file}' was successfully created.")

@@ -1,7 +1,5 @@
-from flask import Blueprint
 from flask import render_template, request, redirect, url_for, flash
-
-upload_bp = Blueprint('upload', __name__)
+from . import upload_bp
 
 @upload_bp.route('/upload', methods=['GET', 'POST'])
 def upload_file():

@@ -1,5 +1,5 @@
 from flask import render_template, redirect, url_for
-from layers.frontend import frontend_bp
+from . import frontend_bp
 
 @frontend_bp.route('/')
 def index():
