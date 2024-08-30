@@ -1,7 +1,7 @@
 from flask import Flask
-from app.frontend.routes import frontend_bp
-from app.backend.pdf import pdf_bp
-from app.backend.upload import upload_bp
+from layers.frontend.routes import frontend_bp
+from layers.backend.pdf import pdf_bp
+from layers.backend.upload import upload_bp
 
 def create_app():
     app = Flask(__name__)
