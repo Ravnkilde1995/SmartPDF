@@ -1,7 +1,6 @@
 from flask import current_app, request, jsonify
 from app.services.file_service import FileService
 from app.services.rename_service import FileRenamer
-import os
 from . import upload_bp
 
 @upload_bp.route('/upload_pdf', methods=['POST'])
