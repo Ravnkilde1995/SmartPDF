@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <script src="{{ url_for('static', filename='js/app.js') }}" defer></script>
     <script src="{{ url_for('static', filename='js/edit.js') }}" defer></script>
+    <script src="{{ url_for('static', filename='js/upload.js') }}" defer></script>
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
 </head>
 
@@ -65,11 +66,20 @@
 
         <div id="upload-view" style="display: none;">
             <h1>Upload PDF</h1>
-            <form action="/upload_pdf" method="post" enctype="multipart/form-data">
-                <label for="file">Select PDF file:</label>
-                <input type="file" id="file" name="file" accept=".pdf" required>
+            <form action="/upload/upload_pdf" method="post" enctype="multipart/form-data">
+                <label for="files">Select PDF file:</label>
+                <input type="file" id="files" name="files[]" accept=".pdf" multiple>
                 <button type="submit">Upload</button>
             </form>
+            <div id="progress-container" style="display: none;">
+                <div id="progress-bar"></div>
+            </div>
+            <div id="upload-status"></div>
+            <div id="download-container" style="display: none; margin-top: 10px;">
+                <a id="download-link" href="" download>
+                    <button>Download PDF</button>
+                </a>
+            </div>
         </div>
     </div>
 </body>

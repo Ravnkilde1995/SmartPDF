@@ -190,6 +190,48 @@ fieldset input[type="text"] {
     margin-bottom: 0;
 }
 
+/* Progress bar styling */
+
+#progress-container {
+    width: 100%;
+    background-color: #f3f3f3;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+#progress-bar {
+    height: 20px;
+    background-color: #4caf50;
+    width: 0;
+    transition: width 0.3s;
+}
+
+#upload-status {
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+/* Download Button Styling */
+#download-container {
+    margin-top: 10px;
+}
+
+#download-link button {
+    background: #75A9F6;
+    color: #fff;
+    border: none;
+    padding: 0.8em 1.5em;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+#download-link button:hover {
+    background: #5c8bf2;
+}
+
 /* Responsive Design */
 @media (max-width: 600px) {
     form {

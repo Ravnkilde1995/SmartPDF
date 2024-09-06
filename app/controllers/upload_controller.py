@@ -1,13 +1,37 @@
-from flask import render_template, request, redirect, url_for, flash
+from flask import current_app, request, jsonify
+from app.services.file_service import FileService
+from app.services.rename_service import FileRenamer
+import os
 from . import upload_bp
 
-@upload_bp.route('/upload', methods=['GET', 'POST'])
-def upload_file():
-    if request.method == 'POST':
-        file = request.files.get('file')
-        if file:
-            flash('File successfully uploaded')
-            return redirect(url_for('frontend.editor'))
+@upload_bp.route('/upload_pdf', methods=['POST'])
+def upload_pdf():
+    files = request.files.getlist('files[]')
+    if not files:
+        return jsonify({'error': 'No files part'}), 400
+
+    file_service = FileService(current_app.config['UPLOAD_FOLDER'])
+    file_renamer = FileRenamer()
+    results = []
+
+    for file in files:
+        if file.filename == '':
+            results.append({'filename': 'Unknown', 'error': 'No selected file'})
+            continue
+
+        if file_service.allowed_file(file.filename):
+            try:
+                # Save file
+                file_path = file_service.save_file(file)
+                
+                # Rename file based on its content
+                new_filename = file_renamer.rename_file(file_path)
+
+                # Add result to list
+                results.append({'filename': new_filename, 'status': 'success'})
+            except Exception as e:
+                results.append({'filename': file.filename, 'error': f"Error processing file: {e}"})
         else:
-            flash('No file selected')
-    return render_template('index.html', view='upload')
+            results.append({'filename': file.filename, 'error': 'File type not allowed'})
+
+    return jsonify(results), 200
