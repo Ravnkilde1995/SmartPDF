@@ -3,24 +3,27 @@ import re
 import os
 
 class FileRenamer:
-    
     def extract_recipient(self, text):
-        match = re.search(r'Full name, signature, and date of pick-up\.\s*(.*)', text, re.DOTALL)
+        match = re.search(r'Recipient Name\s*([a-zA-Z ]+)', text, re.IGNORECASE)
     
         if match:
-        # Extract the recipient from the found section
             recipient = match.group(1).strip()
-        # Split recipient_text to get the first non-empty line
-            lines = recipient.split('\n')
-            for line in lines:
-                if line.strip():  # Check if line is not empty
-                    return line.strip()
-    
+            return recipient
+        
         return "Unknown"
     
     def extract_order_number(self, text):
-        match = re.search(r'(REQ|INC)[A-Z0-9]+', text, re.IGNORECASE)
+        match = re.search(r'(REQ|INC)[0-9]+', text, re.IGNORECASE)
         return match.group(0) if match else "Unknown"
+    
+    def generate_unique_filename(self, directory, filename):
+        base_name, extension = os.path.splitext(filename)
+        counter = 1
+        new_filename = filename
+        while os.path.exists(os.path.join(directory, new_filename)):
+            new_filename = f"{base_name}_{counter}{extension}"
+            counter += 1
+        return new_filename
     
     def rename_file(self, file_path):
         try:
@@ -28,10 +31,15 @@ class FileRenamer:
             recipient = self.extract_recipient(text)
             order_number = self.extract_order_number(text)
 
-            if order_number != "Unknown":
+            if order_number != "Unknown" and recipient != "Unknown":
                 new_filename = f"{recipient} - {order_number}.pdf"
             else:
                 new_filename = "Manual_check.pdf"
+
+            new_filename = self.generate_unique_filename(
+                os.path.dirname(file_path),
+                new_filename
+            )
 
             new_filepath = os.path.join(os.path.dirname(file_path), new_filename)
             os.rename(file_path, new_filepath)
