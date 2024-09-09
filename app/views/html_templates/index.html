@@ -66,7 +66,7 @@
 
         <div id="upload-view" style="display: none;">
             <h1>Upload PDF</h1>
-            <form action="/upload/upload_pdf" method="post" enctype="multipart/form-data">
+            <form id="upload-form" method="post" enctype="multipart/form-data">
                 <label for="files">Select PDF file:</label>
                 <input type="file" id="files" name="files[]" accept=".pdf" multiple>
                 <button type="submit">Upload</button>
