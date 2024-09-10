@@ -11,7 +11,7 @@ def test_index_route(client):
 def test_catch_all_route(client):
     response = client.get('/some/invalid/path')
     
-    assert response.status_code == 302  # indicates a redirect
+    assert response.status_code == 302 
     
     assert response.location.endswith('/')
     
