@@ -14,6 +14,8 @@ document.querySelector('#upload-form').addEventListener('submit', function(event
 
     xhr.onload = function() {
         const status = document.getElementById('upload-status');
+        const downloadContainer = document.getElementById('download-container');
+        const downloadBtn = document.getElementById('download-btn');
         status.innerHTML = '';  
 
         if (xhr.status === 200) {
@@ -42,11 +44,28 @@ document.querySelector('#upload-form').addEventListener('submit', function(event
                     errorMessage.classList.add('error');
                     status.appendChild(errorMessage);
                 });
+
+                downloadBtn.href = '/download/zip';
+                downloadContainer.style.display = 'block';
+
+                const downloadMessage = document.createElement('p');
+                downloadMessage.textContent = "her er dine filer";
+                downloadContainer.appendChild(downloadMessage);
+
+
             } else if (successMessages.length > 0 && errorMessages.length === 0) {
                 const successMessage = document.createElement('p');
                 successMessage.textContent = 'Upload was successful!';
                 successMessage.classList.add('success');
                 status.appendChild(successMessage);
+
+                downloadBtn.href = '/download/zip';
+                downloadContainer.style.display = 'block';
+
+                const downloadMessage = document.createElement('p');
+                downloadMessage.textContent = "her er dine filer";
+                downloadContainer.appendChild(downloadMessage);
+
             } else if (errorMessages.length > 0 && successMessages.length === 0) {
                 errorMessages.forEach(error => {
                     const errorMessage = document.createElement('p');
