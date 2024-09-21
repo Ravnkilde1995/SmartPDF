@@ -26,7 +26,7 @@
     </nav>
     <div id="app">
         <div id="editor-view" style="display: none;">
-            <h1>Editor</h1>
+            <h1>Generate PDF</h1>
             <form id="pdf-form" action="/pdf/generate_pdf" method="post">
                 <label for="recipient_name">Recipient's Name:</label>
                 <input type="text" id="recipient_name" name="recipient_name" required><br>
@@ -67,16 +67,28 @@
         <div id="upload-view" style="display: none;">
             <h1>Upload PDF</h1>
             <form id="upload-form" method="post" enctype="multipart/form-data">
-                <label for="files">Select PDF file:</label>
+                <img src="{{ url_for('static', filename='images/upload_folder.png') }}" alt="upload_folder_png">
+                <label for="files" class="choose-file-label">Choose file</label>
                 <input type="file" id="files" name="files[]" accept=".pdf" multiple>
-                <button type="submit">Upload</button>
+                <br>
+                <button id="submit" type="submit">Upload</button>
+                <p>Please note that only .pdf file types are allowed</p>
             </form>
+
+            
             <div id="progress-container" style="display: none;">
-                <div id="progress-bar"></div>
+                <div id="circular-progress"></div>
+                <p>Uploading...</p>
             </div>
-            <div id="upload-status"></div>
-            <div id="download-container" style="display: none; margin-top: 10px;">
+
+            <div id="upload-status" style="display: none;"></div>
+
+            <div id="download-container"style="display: none;">
                 <a id="download-btn"><button>Download PDF</button></a>
+                <p id="p.success">Your files have successfully been modified by the system. <br>
+                    Please check if any files have been given the name 'Manual_check'. <br>
+                    These files need to be manually checked, as the system was unable to extract the relevant
+                    information.</p>
             </div>
         </div>
     </div>

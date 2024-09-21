@@ -20,13 +20,10 @@ def upload_pdf():
 
         if file_service.allowed_file(file.filename):
             try:
-                # Save file
                 file_path = file_service.save_file(file)
                 
-                # Rename file based on its content
                 new_filename = file_renamer.rename_file(file_path)
 
-                # Add result to list
                 results.append({'filename': new_filename, 'status': 'success'})
             except Exception as e:
                 results.append({'filename': file.filename, 'error': f"Error processing file: {e}"})
