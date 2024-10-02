@@ -200,6 +200,10 @@ fieldset input[type="text"] {
     height: 100vh;
 }
 
+.small-text {
+    font-size: 0.8em;
+}
+
 #upload-form {
     display: flex;
     flex-direction: column;
@@ -225,6 +229,8 @@ fieldset input[type="text"] {
     align-items: center;
     justify-content: center;
     margin-bottom: 1em;
+    height: auto;
+    min-height: 100px;
 }
 
 #circular-progress {

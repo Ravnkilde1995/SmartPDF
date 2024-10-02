@@ -11,7 +11,7 @@ document.querySelector('#upload-form').addEventListener('submit', function(event
     var xhr = new XMLHttpRequest(); 
     xhr.open('POST', '/upload/upload_pdf'); 
     
-    const progressContainer = document.getElementById('progress-container');
+    const progressContainer = document.getElementById('progress');
     const circularProgress = document.getElementById('circular-progress');
     progressContainer.style.display = 'block';
     circularProgress.style.display = 'block';

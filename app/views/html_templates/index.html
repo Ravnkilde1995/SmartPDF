@@ -72,23 +72,22 @@
                 <input type="file" id="files" name="files[]" accept=".pdf" multiple>
                 <br>
                 <button id="submit" type="submit">Upload</button>
-                <p>Please note that only .pdf file types are allowed</p>
+                <p class="small-text">Please note that only .pdf file types are allowed</p>
             </form>
 
-            
-            <div id="progress-container" style="display: none;">
-                <div id="circular-progress"></div>
-                <p>Uploading...</p>
-            </div>
-
-            <div id="upload-status" style="display: none;"></div>
-
-            <div id="download-container"style="display: none;">
-                <a id="download-btn"><button>Download PDF</button></a>
-                <p id="p.success">Your files have successfully been modified by the system. <br>
-                    Please check if any files have been given the name 'Manual_check'. <br>
-                    These files need to be manually checked, as the system was unable to extract the relevant
-                    information.</p>
+            <div id="progress-container">
+                <div id="progress" style="display: none;">
+                    <div id="circular-progress"></div>
+                    <p class="small-text">Uploading...</p>
+                </div>
+                <div id="upload-status" style="display: none;"></div>
+                <div id="download-container" style="display: none;">
+                    <a id="download-btn"><button>Download PDF</button></a>
+                    <p class="small-text" id="p.success">Your files have successfully been modified by the system. <br>
+                        Please check if any files have been given the name 'Manual_check'. <br>
+                        These files need to be manually checked, as the system was unable to extract the relevant
+                        information.</p>
+                </div>
             </div>
         </div>
     </div>
