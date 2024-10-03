@@ -13,7 +13,7 @@ class FileRenamer:
         return "Unknown"
     
     def extract_order_number(self, text):
-        match = re.search(r'(REQ|INC)[0-9]+', text, re.IGNORECASE)
+        match = re.search(r'(REQ|INC)[O0-9]+', text, re.IGNORECASE)
         return match.group(0) if match else "Unknown"
     
     def generate_unique_filename(self, directory, filename):

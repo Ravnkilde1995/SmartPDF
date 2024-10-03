@@ -1,10 +1,14 @@
 from flask import current_app, request, jsonify
 from app.services.file_service import FileService
 from app.services.rename_service import FileRenamer
+from app.services.delete_service import DeleteService
 from . import upload_bp
 
 @upload_bp.route('/upload_pdf', methods=['POST'])
 def upload_pdf():
+    delete_service = DeleteService(current_app.config['UPLOAD_FOLDER'])
+    delete_service.delete_content()
+
     files = request.files.getlist('files[]')
     if not files:
         return jsonify({'error': 'No files part'}), 400
