@@ -14,7 +14,12 @@ class FileRenamer:
     
     def extract_order_number(self, text):
         match = re.search(r'(REQ|INC)[O0-9]+', text, re.IGNORECASE)
-        return match.group(0) if match else "Unknown"
+        
+        if match:
+            order_number = match.group(0)
+            order_number = order_number.replace('O', '0').replace('o', '0')
+            return order_number
+        return "Unknown"
     
     def generate_unique_filename(self, directory, filename):
         base_name, extension = os.path.splitext(filename)
