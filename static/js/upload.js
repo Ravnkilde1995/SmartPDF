@@ -1,95 +1,61 @@
 document.querySelector('#upload-form').addEventListener('submit', function(event) {
-    event.preventDefault(); 
+    event.preventDefault();
 
     const files = document.querySelector('#files').files;
     const formData = new FormData();
+
+    if (files.length === 0) {
+        alert('Please select at least one file to upload.');
+        return;
+    }
 
     for (let i = 0; i < files.length; i++) {
         formData.append('files[]', files[i]);
     }
 
-    var xhr = new XMLHttpRequest(); 
-    xhr.open('POST', '/upload/upload_pdf'); 
-    
     const progressContainer = document.getElementById('progress');
     const circularProgress = document.getElementById('circular-progress');
+    const successMessage = document.getElementById('p.success');
+    const downloadContainer = document.getElementById('download-container');
+    const downloadBtn = document.getElementById('download-btn');
+
     progressContainer.style.display = 'block';
     circularProgress.style.display = 'block';
 
-    xhr.onload = function() {
-        const status = document.getElementById('upload-status');
-        const downloadContainer = document.getElementById('download-container');
-        const downloadBtn = document.getElementById('download-btn');
-        status.innerHTML = '';  
+    fetch('/upload/upload_pdf', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => {
+        circularProgress.style.display = 'none';
+        progressContainer.style.display = 'none';
 
-        circularProgress.style.display = 'none'; 
-        progressContainer.style.display = 'none'; 
-
-        if (xhr.status === 200) {
-            var response = JSON.parse(xhr.responseText);
-
-            const successMessages = [];
-            const errorMessages = [];
-
-            response.forEach(result => {
-                if (result.status === 'success') {
-                    successMessages.push(result.filename); 
-                } else {
-                    errorMessages.push(`Error with file: ${result.filename}. ${result.error}`); 
-                }
-            });
-
-            handleMessages(successMessages, errorMessages, downloadBtn, downloadContainer, status);
-
+        if (response.ok) {
+            return response.json();
         } else {
-            console.error('Error:', xhr.statusText);
-            status.innerHTML = '<p class="error">There was an error uploading files.</p>';
+            throw new Error('Network response was not ok.');
         }
-    };
+    })
+    .then(data => {
+        const hasErrors = data.some(fileResult => fileResult.error);
 
-    xhr.onerror = function() {
-        console.error('Network Error');
-        const status = document.getElementById('upload-status');
-        status.innerHTML = '<p class="error">There was an error uploading files.</p>';
-        circularProgress.style.display = 'none'; 
-        progressContainer.style.display = 'none'; 
-    };
+        if (hasErrors) {
+            alert('Some files could not be uploaded due to unsupported file types.');
+            downloadContainer.style.display = 'none';
+        } else {
+            successMessage.style.display = 'block';
+            downloadBtn.href = '/download/zip';
+            downloadContainer.style.display = 'block';
+        }
+    })
+    .catch(error => {
+        console.error('Network Error:', error);
+        circularProgress.style.display = 'none';
+        progressContainer.style.display = 'none';
+    });
 
-    xhr.send(formData);
+    downloadBtn.addEventListener('click', () => {
+        successMessage.style.display = 'none';
+        downloadContainer.style.display = 'none';
+    });
 });
-
-function handleMessages(successMessages, errorMessages, downloadBtn, downloadContainer, status) {
-    if (successMessages.length > 0 && errorMessages.length > 0) {
-        const mixedMessage = document.createElement('p');
-        mixedMessage.textContent = 'Files were uploaded, but there were errors:';
-        mixedMessage.classList.add('warning');
-        status.appendChild(mixedMessage);
-        
-        errorMessages.forEach(error => {
-            const errorMessage = document.createElement('p');
-            errorMessage.textContent = error;
-            errorMessage.classList.add('error');
-            status.appendChild(errorMessage);
-        });
-        
-        downloadBtn.href = '/download/zip';
-        downloadContainer.style.display = 'block';
-
-    } else if (successMessages.length > 0) {
-        const successMessage = document.createElement('p');
-        successMessage.textContent = 'Upload was successful!';
-        successMessage.classList.add('success');
-        status.appendChild(successMessage);
-
-        downloadBtn.href = '/download/zip';
-        downloadContainer.style.display = 'block';
-
-    } else if (errorMessages.length > 0) {
-        errorMessages.forEach(error => {
-            const errorMessage = document.createElement('p');
-            errorMessage.textContent = error;
-            errorMessage.classList.add('error');
-            status.appendChild(errorMessage);
-        });
-    }
-}

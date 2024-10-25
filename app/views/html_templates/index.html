@@ -12,7 +12,6 @@
     <script src="{{ url_for('static', filename='js/upload.js') }}" defer></script>
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
 </head>
-
 <body>
     <nav class="nav">
         <div class="logo-container">
@@ -30,13 +29,10 @@
             <form id="pdf-form" action="/pdf/generate_pdf" method="post">
                 <label for="recipient_name">Recipient's Name:</label>
                 <input type="text" id="recipient_name" name="recipient_name" required><br>
-
                 <label for="req_number">Request Number:</label>
                 <input type="text" id="req_number" name="req_number" required><br>
-
                 <label for="date">Date:</label>
                 <input type="date" id="date" name="date" required><br>
-
                 <fieldset id="items-fieldset">
                     <legend>Items</legend>
                     <div id="item-container">
@@ -48,7 +44,6 @@
                         </div>
                     </div>
                 </fieldset>
-
                 <label for="serial_number">Serial Number:</label>
                 <input type="text" id="serial_number" name="serial_number" maxlength="20"><br>
 
@@ -63,18 +58,15 @@
                 </div>
             </form>
         </div>
-
         <div id="upload-view" style="display: none;">
             <h1>Upload PDF</h1>
             <form id="upload-form" method="post" enctype="multipart/form-data">
                 <img src="{{ url_for('static', filename='images/upload_folder.png') }}" alt="upload_folder_png">
-                <label for="files" class="choose-file-label">Choose file</label>
                 <input type="file" id="files" name="files[]" accept=".pdf" multiple>
                 <br>
                 <button id="submit" type="submit">Upload</button>
                 <p class="small-text">Please note that only .pdf file types are allowed</p>
             </form>
-
             <div id="progress-container">
                 <div id="progress" style="display: none;">
                     <div id="circular-progress"></div>

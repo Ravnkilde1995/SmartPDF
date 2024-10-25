@@ -20,22 +20,20 @@ window.onload = function () {
         }
     }
 
-    // Initialize view based on current URL or default
     const urlParams = new URLSearchParams(window.location.search);
     const viewParam = urlParams.get('view') || 'editor';
     showView(viewParam);
 
-    // Event listeners for buttons to change the view
     showEditorBtn.addEventListener('click', function () {
         history.pushState(null, null, '?view=editor');
         showView('editor');
     });
+
     showUploadBtn.addEventListener('click', function () {
         history.pushState(null, null, '?view=upload');
         showView('upload');
     });
 
-    // Handle back/forward browser navigation
     window.addEventListener('popstate', function () {
         const urlParams = new URLSearchParams(window.location.search);
         const viewParam = urlParams.get('view') || 'editor';

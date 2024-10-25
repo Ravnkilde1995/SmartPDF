@@ -8,7 +8,15 @@ class FileService:
         self.upload_folder = upload_folder
 
     def allowed_file(self, filename):
-        return '.' in filename and filename.rsplit('.', 1)[1].lower() in self.ALLOWED_EXTENSIONS
+        has_dot = '.' in filename
+
+        if not has_dot:
+            return False
+
+        file_extension = filename.rsplit('.', 1) [1].lower()
+        is_allowed = file_extension in self.ALLOWED_EXTENSIONS
+
+        return is_allowed
 
     def save_file(self, file):
         if not self.allowed_file(file.filename):

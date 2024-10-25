@@ -6,14 +6,16 @@ from . import upload_bp
 
 @upload_bp.route('/upload_pdf', methods=['POST'])
 def upload_pdf():
-    delete_service = DeleteService(current_app.config['UPLOAD_FOLDER'])
+    upload_folder = current_app.config['UPLOAD_FOLDER']
+
+    delete_service = DeleteService(upload_folder)
     delete_service.delete_content()
 
     files = request.files.getlist('files[]')
     if not files:
         return jsonify({'error': 'No files part'}), 400
 
-    file_service = FileService(current_app.config['UPLOAD_FOLDER'])
+    file_service = FileService(upload_folder)
     file_renamer = FileRenamer()
     results = []
 
